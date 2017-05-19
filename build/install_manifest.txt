@@ -1,0 +1,11 @@
+/home/mlcv/catkin_ws/install/_setup_util.py
+/home/mlcv/catkin_ws/install/env.sh
+/home/mlcv/catkin_ws/install/setup.bash
+/home/mlcv/catkin_ws/install/setup.sh
+/home/mlcv/catkin_ws/install/setup.zsh
+/home/mlcv/catkin_ws/install/.rosinstall
+/home/mlcv/catkin_ws/install/lib/pkgconfig/uavs-test.pc
+/home/mlcv/catkin_ws/install/share/uavs-test/cmake/uavs-testConfig.cmake
+/home/mlcv/catkin_ws/install/share/uavs-test/cmake/uavs-testConfig-version.cmake
+/home/mlcv/catkin_ws/install/share/uavs-test/package.xml
+/home/mlcv/catkin_ws/install/lib/uavs-test/test_node
