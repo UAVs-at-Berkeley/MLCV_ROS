@@ -1,6 +1,7 @@
 //Standard Include
 #include "ros/ros.h"
 #include <cstdlib>
+#include <string>
 
 //Include Message Types Used
 #include <mavros_msgs/OverrideRCIn.h>
@@ -23,6 +24,8 @@
 #define RISING 1690
 #define RELEASE 1100
 #define NO_RC 900
+
+using namespace std;
 
 /*************** Callbacks  *************/
 
@@ -87,10 +90,10 @@ void Receiver::stateCallback(const mavros_msgs::State::ConstPtr& msg) {
 
 void Receiver::vfrCallback(const mavros_msgs::VFR_HUD::ConstPtr& msg) {
     if(terminate) return;
-    if(vfr_finished) return;
     
-    double altitude = msg->altitude;
-    ROS_INFOR("ALTITUDE" << altitude);
+    ROS_INFO("ALTITUDE: " + std::to_string(msg->altitude));
+
+    if(vfr_finished) return;
 }
 
 void Receiver::rcCallback(const mavros_msgs::RCIn::ConstPtr& msg) {    if(msg->channels[LEFT_TRIGGER] > 1200) terminate = true;
