@@ -11,6 +11,8 @@ ros/ros.h
 /home/mlcv/catkin_ws/src/uavs-test/src/ros/ros.h
 cstdlib
 -
+string
+-
 mavros_msgs/OverrideRCIn.h
 -
 mavros_msgs/State.h

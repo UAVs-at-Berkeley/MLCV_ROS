@@ -91,9 +91,11 @@ void Receiver::stateCallback(const mavros_msgs::State::ConstPtr& msg) {
 void Receiver::vfrCallback(const mavros_msgs::VFR_HUD::ConstPtr& msg) {
     if(terminate) return;
     
-    ROS_INFO("ALTITUDE: " + std::to_string(msg->altitude));
+    ROS_INFO_STREAM("Altitude: " << msg->altitude);
 
     if(vfr_finished) return;
+    
+    if (msg->altitude > 0.5) vfr_finished = true;
 }
 
 void Receiver::rcCallback(const mavros_msgs::RCIn::ConstPtr& msg) {    if(msg->channels[LEFT_TRIGGER] > 1200) terminate = true;
@@ -130,7 +132,7 @@ int main(int argc, char **argv) {
     mavros_msgs::OverrideRCIn rc_command;
     
     //ARMING
-    ROS_INFO("Commencing: {relimiary Setup");
+    ROS_INFO("Commencing: Preliminary Setup");
     
     system("rosrun mavros mavsys mode -c ALT_HOLD");
 
@@ -144,29 +146,37 @@ int main(int argc, char **argv) {
 
     //throttle up
 
-    for(int i=0; i < 8; i++) rc_command.channels[i] = 0; //release
-    rc_command.channels[THROTTLE] = RISING; //ascend
+    for(int i=0; i < 8; i++) rc_command.channels[i] = NO_RC; //release
+    rc_command.channels[THROTTLE] = RELEASE; //ascend
     
     receiver.rc_check_ch = THROTTLE;
-    receiver.rc_check_val = RISING;
+    receiver.rc_check_val = RELEASE;
     receiver.rc_finished = false;
+    
+    rc_message.publish(rc_command);
     while((!receiver.rc_finished) && (ros::ok()) && (!receiver.terminate))
-     {
-	ros::spinOnce();
-	rc_message.publish(rc_command);
-     }
+    {
+     	ros::spinOnce();
+     	//rc_message.publish(rc_command);
+    }
+    
+    receiver.vfr_finished = false;    
+    while(!receiver.vfr_finished && ros::ok() && !receiver.terminate) 
+    {
+    	ros::spinOnce();
+    }
     
     //RELEASE    
-    for(int i=0; i < 8; i++) rc_command.channels[i] = 0; //Release everything
-    rc_command.channels[THROTTLE] = NO_RC;
-
+    for(int i=0; i < 8; i++) rc_command.channels[i] = NO_RC; //Release everything
+    
     receiver.rc_check_ch = THROTTLE;
     receiver.rc_check_val = NO_RC;
     receiver.rc_finished = false;
+    rc_message.publish(rc_command);
     while((!receiver.rc_finished) && (ros::ok()) && (!receiver.terminate))
      {
         ros::spinOnce();
-        rc_message.publish(rc_command);
+        //rc_message.publish(rc_command);
      }
     ROS_INFO("RELEASING");
 }

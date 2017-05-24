@@ -1,6 +1,7 @@
 //Standard Include
 #include "ros/ros.h"
 #include <cstdlib>
+#include <string>
 
 //Include Message Types Used
 #include <mavros_msgs/OverrideRCIn.h>
@@ -23,6 +24,8 @@
 #define RISING 1690
 #define RELEASE 1100
 #define NO_RC 900
+
+using namespace std;
 
 /*************** Callbacks  *************/
 
@@ -53,44 +56,46 @@ void Receiver::stateCallback(const mavros_msgs::State::ConstPtr& msg) {
     
    if(state_check == PRELIMINARY_CHECK)
    {
-	if(msg->mode == "ALT_HOLD")
-	{
-		ROS_INFO("COMPLETED: ALT_HOLD");
-		check1 = true;
-	} 
-	else 
-	{	
-	   ROS_INFO("WAITING: ALT_HOLD");
-	   check1 = false;
-    	system("rosrun mavros mavsys mode -c ALT_HOLD");
-	}
+		if(msg->mode == "ALT_HOLD")
+		{
+			ROS_INFO("COMPLETED: ALT_HOLD");
+			check1 = true;
+		} 
+		else 
+		{	
+	   	ROS_INFO("WAITING: ALT_HOLD");
+	   	check1 = false;
+    		system("rosrun mavros mavsys mode -c ALT_HOLD");
+		}
 
-	if(msg->armed)
-  	{
-      ROS_INFO("COMPLETED: Arming");
-      check2 = true;
- 	} else 
- 	{
-      ROS_INFO("WAITING: Arming");
- 		check2 = false;
-      system("rosrun mavros mavsafety arm");
-	}
+		if(msg->armed)
+  		{
+      	ROS_INFO("COMPLETED: Arming");
+      	check2 = true;
+ 		} else 
+ 		{
+      	ROS_INFO("WAITING: Arming");
+ 			check2 = false;
+			system("rosrun mavros mavsafety arm");
+		}
 	
-	if(check1 && check2)
-	{
-	    ROS_INFO("COMPLETED: Preliminary Check");
-	    state_finished = true;
-	}	
+		if(check1 && check2)
+		{
+	    	ROS_INFO("COMPLETED: Preliminary Check");
+	   	 state_finished = true;
+		}	
 
 	}
 }
 
 void Receiver::vfrCallback(const mavros_msgs::VFR_HUD::ConstPtr& msg) {
     if(terminate) return;
+    
+    ROS_INFO_STREAM("Altitude: " << msg->altitude);
+
     if(vfr_finished) return;
     
-    double altitude = msg->altitude;
-    ROS_INFOR("ALTITUDE" << altitude);
+    if (msg->altitude > 0.5) vfr_finished = true;
 }
 
 void Receiver::rcCallback(const mavros_msgs::RCIn::ConstPtr& msg) {    if(msg->channels[LEFT_TRIGGER] > 1200) terminate = true;
@@ -127,7 +132,7 @@ int main(int argc, char **argv) {
     mavros_msgs::OverrideRCIn rc_command;
     
     //ARMING
-    ROS_INFO("Commencing: {relimiary Setup");
+    ROS_INFO("Commencing: Preliminary Setup");
     
     system("rosrun mavros mavsys mode -c ALT_HOLD");
 
@@ -141,29 +146,37 @@ int main(int argc, char **argv) {
 
     //throttle up
 
-    for(int i=0; i < 8; i++) rc_command.channels[i] = 0; //release
-    rc_command.channels[THROTTLE] = RISING; //ascend
+    for(int i=0; i < 8; i++) rc_command.channels[i] = NO_RC; //release
+    rc_command.channels[THROTTLE] = RELEASE; //ascend
     
     receiver.rc_check_ch = THROTTLE;
-    receiver.rc_check_val = RISING;
+    receiver.rc_check_val = RELEASE;
     receiver.rc_finished = false;
+    
+    rc_message.publish(rc_command);
     while((!receiver.rc_finished) && (ros::ok()) && (!receiver.terminate))
-     {
-	ros::spinOnce();
-	rc_message.publish(rc_command);
-     }
+    {
+     	ros::spinOnce();
+     	//rc_message.publish(rc_command);
+    }
+    
+    receiver.vfr_finished = false;    
+    while(!receiver.vfr_finished && ros::ok() && !receiver.terminate) 
+    {
+    	ros::spinOnce();
+    }
     
     //RELEASE    
-    for(int i=0; i < 8; i++) rc_command.channels[i] = 0; //Release everything
-    rc_command.channels[THROTTLE] = NO_RC;
-
+    for(int i=0; i < 8; i++) rc_command.channels[i] = NO_RC; //Release everything
+    
     receiver.rc_check_ch = THROTTLE;
     receiver.rc_check_val = NO_RC;
     receiver.rc_finished = false;
+    rc_message.publish(rc_command);
     while((!receiver.rc_finished) && (ros::ok()) && (!receiver.terminate))
      {
         ros::spinOnce();
-        rc_message.publish(rc_command);
+        //rc_message.publish(rc_command);
      }
     ROS_INFO("RELEASING");
 }
