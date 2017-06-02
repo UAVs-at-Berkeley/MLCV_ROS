@@ -8,6 +8,7 @@
 #include <mavros_msgs/State.h>
 #include <mavros_msgs/VFR_HUD.h>
 #include <mavros_msgs/RCIn.h>
+#include <geometry_msgs/Twist.h>
 
 //Defines
 #define ROLL 0
@@ -35,6 +36,8 @@ class Receiver {
 	void stateCallback(const mavros_msgs::State::ConstPtr& msg);
 	void vfrCallback(const mavros_msgs::VFR_HUD::ConstPtr& msg);
 	void rcCallback(const mavros_msgs::RCIn::ConstPtr& msg);
+	
+	void keyCallback(const geometry_msgs::Twist::ConstPtr& msg);
 	
 	bool state_finished;
 	bool vfr_finished;
@@ -110,6 +113,13 @@ void Receiver::rcCallback(const mavros_msgs::RCIn::ConstPtr& msg) {    if(msg->c
     else rc_finished = false;
 }
 
+void Receiver::keyCallback(const geometry_msgs::Twist::ConstPtr& msg) 
+{
+	if (msg->linear.z < 0) {
+		ROS_WARN("Received Quit Message");	
+	}
+}
+
 /*************** MAIN PROGRAM *************/
 
 int main(int argc, char **argv) {
@@ -122,7 +132,7 @@ int main(int argc, char **argv) {
     ros::Subscriber state_sub = nh.subscribe("/mavros/state", 1, &Receiver::stateCallback, &receiver);
     ros::Subscriber vfr_sub = nh.subscribe("/mavros/vfr_hud", 1, &Receiver::vfrCallback, &receiver);
     ros::Subscriber rc_sub = nh.subscribe("/mavros/rc/in", 1, &Receiver::rcCallback, &receiver);
-
+	 ros::Subscriber key_sub = nh.subscribe("/cmd_vel", 1, &Receiver::keyCallback, &receiver);
     receiver.state_finished = true;
     receiver.vfr_finished = true;
     receiver.rc_finished = true;

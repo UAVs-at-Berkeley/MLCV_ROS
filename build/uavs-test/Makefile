@@ -166,6 +166,36 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+uavs-test/CMakeFiles/exp_node.dir/rule:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uavs-test/CMakeFiles/exp_node.dir/rule
+.PHONY : uavs-test/CMakeFiles/exp_node.dir/rule
+
+# Convenience name for target.
+exp_node: uavs-test/CMakeFiles/exp_node.dir/rule
+
+.PHONY : exp_node
+
+# fast build rule for target.
+exp_node/fast:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/build
+.PHONY : exp_node/fast
+
+# Convenience name for target.
+uavs-test/CMakeFiles/stpt_node.dir/rule:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uavs-test/CMakeFiles/stpt_node.dir/rule
+.PHONY : uavs-test/CMakeFiles/stpt_node.dir/rule
+
+# Convenience name for target.
+stpt_node: uavs-test/CMakeFiles/stpt_node.dir/rule
+
+.PHONY : stpt_node
+
+# fast build rule for target.
+stpt_node/fast:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/build
+.PHONY : stpt_node/fast
+
+# Convenience name for target.
 uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir/rule:
 	cd /home/mlcv/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir/rule
 .PHONY : uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir/rule
@@ -1005,6 +1035,33 @@ tf2_msgs_generate_messages_cpp/fast:
 	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make uavs-test/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
 .PHONY : tf2_msgs_generate_messages_cpp/fast
 
+src/exp.o: src/exp.cpp.o
+
+.PHONY : src/exp.o
+
+# target to build an object file
+src/exp.cpp.o:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/src/exp.cpp.o
+.PHONY : src/exp.cpp.o
+
+src/exp.i: src/exp.cpp.i
+
+.PHONY : src/exp.i
+
+# target to preprocess a source file
+src/exp.cpp.i:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/src/exp.cpp.i
+.PHONY : src/exp.cpp.i
+
+src/exp.s: src/exp.cpp.s
+
+.PHONY : src/exp.s
+
+# target to generate assembly for a file
+src/exp.cpp.s:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/src/exp.cpp.s
+.PHONY : src/exp.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -1032,6 +1089,33 @@ src/main.cpp.s:
 	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/test_node.dir/build.make uavs-test/CMakeFiles/test_node.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/setpoint_main.o: src/setpoint_main.cpp.o
+
+.PHONY : src/setpoint_main.o
+
+# target to build an object file
+src/setpoint_main.cpp.o:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/src/setpoint_main.cpp.o
+.PHONY : src/setpoint_main.cpp.o
+
+src/setpoint_main.i: src/setpoint_main.cpp.i
+
+.PHONY : src/setpoint_main.i
+
+# target to preprocess a source file
+src/setpoint_main.cpp.i:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/src/setpoint_main.cpp.i
+.PHONY : src/setpoint_main.cpp.i
+
+src/setpoint_main.s: src/setpoint_main.cpp.s
+
+.PHONY : src/setpoint_main.s
+
+# target to generate assembly for a file
+src/setpoint_main.cpp.s:
+	cd /home/mlcv/catkin_ws/build && $(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/src/setpoint_main.cpp.s
+.PHONY : src/setpoint_main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1042,6 +1126,8 @@ help:
 	@echo "... list_install_components"
 	@echo "... install"
 	@echo "... install/local"
+	@echo "... exp_node"
+	@echo "... stpt_node"
 	@echo "... mavros_msgs_generate_messages_nodejs"
 	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_nodejs"
@@ -1101,9 +1187,15 @@ help:
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_cpp"
+	@echo "... src/exp.o"
+	@echo "... src/exp.i"
+	@echo "... src/exp.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/setpoint_main.o"
+	@echo "... src/setpoint_main.i"
+	@echo "... src/setpoint_main.s"
 .PHONY : help
 
 

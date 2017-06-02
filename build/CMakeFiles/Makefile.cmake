@@ -235,6 +235,8 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/download_extra_data.dir/DependInfo.cmake"
   "gtest/CMakeFiles/gtest.dir/DependInfo.cmake"
   "gtest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
+  "uavs-test/CMakeFiles/exp_node.dir/DependInfo.cmake"
+  "uavs-test/CMakeFiles/stpt_node.dir/DependInfo.cmake"
   "uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir/DependInfo.cmake"
   "uavs-test/CMakeFiles/tf2_msgs_generate_messages_py.dir/DependInfo.cmake"
   "uavs-test/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/DependInfo.cmake"

@@ -257,6 +257,32 @@ gtest_main/fast:
 .PHONY : gtest_main/fast
 
 #=============================================================================
+# Target rules for targets named exp_node
+
+# Build rule for target.
+exp_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 exp_node
+.PHONY : exp_node
+
+# fast build rule for target.
+exp_node/fast:
+	$(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/build
+.PHONY : exp_node/fast
+
+#=============================================================================
+# Target rules for targets named stpt_node
+
+# Build rule for target.
+stpt_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 stpt_node
+.PHONY : stpt_node
+
+# fast build rule for target.
+stpt_node/fast:
+	$(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/build
+.PHONY : stpt_node/fast
+
+#=============================================================================
 # Target rules for targets named mavros_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -1004,6 +1030,8 @@ help:
 	@echo "... install/strip"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... exp_node"
+	@echo "... stpt_node"
 	@echo "... mavros_msgs_generate_messages_nodejs"
 	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_nodejs"

@@ -23,6 +23,8 @@
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/list_install_components.dir
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/install.dir
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/install/local.dir
+/home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/exp_node.dir
+/home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/stpt_node.dir
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/tf2_msgs_generate_messages_py.dir
 /home/mlcv/catkin_ws/build/uavs-test/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir

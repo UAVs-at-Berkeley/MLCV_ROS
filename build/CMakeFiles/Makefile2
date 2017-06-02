@@ -245,7 +245,7 @@ gtest/preinstall:
 gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=1,2 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=3,4 "Built target gtest"
 .PHONY : gtest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -277,7 +277,7 @@ clean: gtest/CMakeFiles/gtest.dir/clean
 gtest/CMakeFiles/gtest_main.dir/all: gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=3,4 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=5,6 "Built target gtest_main"
 .PHONY : gtest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -306,11 +306,15 @@ clean: gtest/CMakeFiles/gtest_main.dir/clean
 # Directory level rules for directory uavs-test
 
 # Convenience name for "all" pass in the directory.
+uavs-test/all: uavs-test/CMakeFiles/exp_node.dir/all
+uavs-test/all: uavs-test/CMakeFiles/stpt_node.dir/all
 uavs-test/all: uavs-test/CMakeFiles/test_node.dir/all
 
 .PHONY : uavs-test/all
 
 # Convenience name for "clean" pass in the directory.
+uavs-test/clean: uavs-test/CMakeFiles/exp_node.dir/clean
+uavs-test/clean: uavs-test/CMakeFiles/stpt_node.dir/clean
 uavs-test/clean: uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir/clean
 uavs-test/clean: uavs-test/CMakeFiles/tf2_msgs_generate_messages_py.dir/clean
 uavs-test/clean: uavs-test/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/clean
@@ -374,6 +378,80 @@ uavs-test/clean: uavs-test/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/clean
 uavs-test/preinstall:
 
 .PHONY : uavs-test/preinstall
+
+#=============================================================================
+# Target rules for target uavs-test/CMakeFiles/exp_node.dir
+
+# All Build rule for target.
+uavs-test/CMakeFiles/exp_node.dir/all:
+	$(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/depend
+	$(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=1,2 "Built target exp_node"
+.PHONY : uavs-test/CMakeFiles/exp_node.dir/all
+
+# Include target in all.
+all: uavs-test/CMakeFiles/exp_node.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+uavs-test/CMakeFiles/exp_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mlcv/catkin_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 uavs-test/CMakeFiles/exp_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mlcv/catkin_ws/build/CMakeFiles 0
+.PHONY : uavs-test/CMakeFiles/exp_node.dir/rule
+
+# Convenience name for target.
+exp_node: uavs-test/CMakeFiles/exp_node.dir/rule
+
+.PHONY : exp_node
+
+# clean rule for target.
+uavs-test/CMakeFiles/exp_node.dir/clean:
+	$(MAKE) -f uavs-test/CMakeFiles/exp_node.dir/build.make uavs-test/CMakeFiles/exp_node.dir/clean
+.PHONY : uavs-test/CMakeFiles/exp_node.dir/clean
+
+# clean rule for target.
+clean: uavs-test/CMakeFiles/exp_node.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target uavs-test/CMakeFiles/stpt_node.dir
+
+# All Build rule for target.
+uavs-test/CMakeFiles/stpt_node.dir/all:
+	$(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/depend
+	$(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=7,8 "Built target stpt_node"
+.PHONY : uavs-test/CMakeFiles/stpt_node.dir/all
+
+# Include target in all.
+all: uavs-test/CMakeFiles/stpt_node.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+uavs-test/CMakeFiles/stpt_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mlcv/catkin_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 uavs-test/CMakeFiles/stpt_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mlcv/catkin_ws/build/CMakeFiles 0
+.PHONY : uavs-test/CMakeFiles/stpt_node.dir/rule
+
+# Convenience name for target.
+stpt_node: uavs-test/CMakeFiles/stpt_node.dir/rule
+
+.PHONY : stpt_node
+
+# clean rule for target.
+uavs-test/CMakeFiles/stpt_node.dir/clean:
+	$(MAKE) -f uavs-test/CMakeFiles/stpt_node.dir/build.make uavs-test/CMakeFiles/stpt_node.dir/clean
+.PHONY : uavs-test/CMakeFiles/stpt_node.dir/clean
+
+# clean rule for target.
+clean: uavs-test/CMakeFiles/stpt_node.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target uavs-test/CMakeFiles/mavros_msgs_generate_messages_nodejs.dir
@@ -1982,7 +2060,7 @@ clean: uavs-test/CMakeFiles/actionlib_generate_messages_py.dir/clean
 uavs-test/CMakeFiles/test_node.dir/all:
 	$(MAKE) -f uavs-test/CMakeFiles/test_node.dir/build.make uavs-test/CMakeFiles/test_node.dir/depend
 	$(MAKE) -f uavs-test/CMakeFiles/test_node.dir/build.make uavs-test/CMakeFiles/test_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=5,6 "Built target test_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mlcv/catkin_ws/build/CMakeFiles --progress-num=9,10 "Built target test_node"
 .PHONY : uavs-test/CMakeFiles/test_node.dir/all
 
 # Include target in all.
