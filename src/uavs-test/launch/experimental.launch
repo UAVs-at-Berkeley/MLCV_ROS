@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="uavs-test" name="exp_node" type="exp"/>
+</launch>
