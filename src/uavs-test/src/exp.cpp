@@ -65,24 +65,24 @@ void set_rc(ros::Publisher rc_message, int speed[]) {
 		ROS_ERROR("Cannot set speed yet");		
 		return;	
 	}
-			
+
 	mavros_msgs::OverrideRCIn rc_command;	
 	
 	for(int i=0; i < 8; i++) rc_command.channels[i] = speed[i];
-	
-	rc_message.publish(rc_command);
 
-   bool done = false;
-   while (ros::ok() && !done) 
-   {
+		rc_message.publish(rc_command);
+
+	bool done = false;
+	while (ros::ok() && !done) 
+	{
 		for (int i=0; i < 8; i++) {
 			if (current_rc.channels[i] <= (speed[i] + 7) || current_rc.channels[i] >= (speed[i] - 7))		
 				done = true;
 		}   	
-   	rc_message.publish(rc_command);
-   	ros::spinOnce();
-   	
-   }
+		rc_message.publish(rc_command);
+		ros::spinOnce();
+
+	}
 }
 
 int main(int argc, char **argv) 
@@ -102,55 +102,55 @@ int main(int argc, char **argv)
 
 	try {
 
-	//wait til start
-	while(ros::ok() && !current_state.connected) {
-		ros::spinOnce();
-		rate.sleep();
-	}
-	
-	ros::Duration flyDuration(2.);
-	
-	mavros_msgs::OverrideRCIn rc_command;
+		//wait til start
+		while(ros::ok() && !current_state.connected) {
+			ros::spinOnce();
+			rate.sleep();
+		}
 
-	//arming
-	
-	mavros_msgs::CommandBool arm_cmd;
-	arm_cmd.request.value = true;
-	
-	mavros_msgs::SetMode set_guided_cmd;
-	set_guided_cmd.request.custom_mode = "STABILIZE";
-	
-	while(ros::ok() && !(mode_client.call(set_guided_cmd) && set_guided_cmd.response.success)) {
-		ros::spinOnce();
-		rate.sleep();
-	}
-	ROS_INFO("Mode Changed to STABILIZE");
-	while(ros::ok() && !(arming_client.call(arm_cmd) && arm_cmd.response.success)) {
-		ros::spinOnce();
-		rate.sleep();
-	}
-	ROS_INFO("Quad Armed");	
+		ros::Duration flyDuration(2.);
+
+		mavros_msgs::OverrideRCIn rc_command;
+
+		//arming
+
+		mavros_msgs::CommandBool arm_cmd;
+		arm_cmd.request.value = true;
+
+		mavros_msgs::SetMode set_guided_cmd;
+		set_guided_cmd.request.custom_mode = "STABILIZE";
+
+		while(ros::ok() && !(mode_client.call(set_guided_cmd) && set_guided_cmd.response.success)) {
+			ros::spinOnce();
+			rate.sleep();
+		}
+		ROS_INFO("Mode Changed to STABILIZE");
+		while(ros::ok() && !(arming_client.call(arm_cmd) && arm_cmd.response.success)) {
+			ros::spinOnce();
+			rate.sleep();
+		}
+		ROS_INFO("Quad Armed");	
 		
-	while (!rc_available) 
-	{
-		ros::spinOnce();
-	}
-	 
-	//experimental stuff
-	ROS_WARN("Beginning Tests");	
-	
-	set_rc(rc_message,onSpeed);   
-   
-   flyDuration.sleep();
-      
-	set_rc(rc_message,midSpeed);
-	
-	flyDuration.sleep();
-	
-	set_rc(rc_message,offSpeed); 	 
-   
-	ROS_INFO("EXITING");   
-	
+		while (!rc_available) 
+		{
+			ros::spinOnce();
+		}
+
+		//experimental stuff
+		ROS_WARN("Beginning Tests");	
+
+		set_rc(rc_message,onSpeed);   
+
+		flyDuration.sleep();
+
+		set_rc(rc_message,midSpeed);
+
+		flyDuration.sleep();
+
+		set_rc(rc_message,offSpeed); 	 
+
+		ROS_INFO("EXITING");   
+
 	} catch (int d) {
 		if (d==-1) {
 			ROS_INFO("ABORTED MANUALLY");
