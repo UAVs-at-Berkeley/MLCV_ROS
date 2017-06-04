@@ -23,6 +23,8 @@ mavros_msgs/RCIn.h
 -
 geometry_msgs/Twist.h
 -
+std_msgs/String.h
+-
 mavros_msgs/SetMode.h
 -
 mavros_msgs/CommandBool.h
@@ -887,6 +889,22 @@ ros/forwards.h
 /opt/ros/kinetic/include/rosconsole/macros_generated.h
 
 /opt/ros/kinetic/include/std_msgs/Header.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/kinetic/include/std_msgs/String.h
 string
 -
 vector

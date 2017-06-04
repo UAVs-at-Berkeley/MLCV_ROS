@@ -1,2 +1,2 @@
-uavs-test
+uavs-test:utilities
 -DCATKIN_DEVEL_PREFIX=/home/mlcv/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mlcv/catkin_ws/install -G Unix Makefiles

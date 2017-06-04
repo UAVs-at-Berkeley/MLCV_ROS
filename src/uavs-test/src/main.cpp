@@ -9,6 +9,7 @@
 #include <mavros_msgs/VFR_HUD.h>
 #include <mavros_msgs/RCIn.h>
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/String.h>
 
 //Defines
 #define ROLL 0
@@ -28,7 +29,13 @@
 
 using namespace std;
 
+
+int offSpeed [8] = {900,900,900,900,900,900,900,900};
+mavros_msgs::RCIn current_rc;
+bool rc_available;
+
 /*************** Callbacks  *************/
+
 
 class Receiver {
     public:
@@ -49,6 +56,8 @@ class Receiver {
 	double alt_ground;
 	int rc_check_ch;
 	int rc_check_val;
+	
+
 };
 
 void Receiver::stateCallback(const mavros_msgs::State::ConstPtr& msg) {
@@ -99,10 +108,19 @@ void Receiver::vfrCallback(const mavros_msgs::VFR_HUD::ConstPtr& msg) {
     if(vfr_finished) return;
     
     if (msg->altitude > 0.5) vfr_finished = true;
+
+}
+
+
+void rc_cb(const mavros_msgs::RCIn::ConstPtr& msg)
+{
+        current_rc = *msg;
+        rc_available = true;
 }
 
 void Receiver::rcCallback(const mavros_msgs::RCIn::ConstPtr& msg) {    if(msg->channels[LEFT_TRIGGER] > 1200) terminate = true;
 
+	rc_cb(msg);
     if(rc_finished) return;
 
     if(msg->channels[rc_check_ch] <= (rc_check_val + 7) || msg->channels[rc_check_ch] >= (rc_check_val - 7))
@@ -120,6 +138,40 @@ void Receiver::keyCallback(const geometry_msgs::Twist::ConstPtr& msg)
 	}
 }
 
+//UTILITIES
+
+void set_rc(ros::Publisher rc_message, int speed[]) {
+        if (!rc_available) {
+                ROS_ERROR("Cannot set speed yet");
+                return;
+        }
+
+        mavros_msgs::OverrideRCIn rc_command;
+
+        for(int i=0; i < 8; i++) rc_command.channels[i] = speed[i];
+
+        rc_message.publish(rc_command);
+
+   bool done = false;
+   while (ros::ok() && !done)
+   {
+                for (int i=0; i < 8; i++) {
+                        if (current_rc.channels[i] <= (speed[i] + 7) || current_rc.channels[i] >= (speed[i] - 7))
+                                done = true;
+                }
+        rc_message.publish(rc_command);
+        ros::spinOnce();
+
+   }
+}
+
+void key_cb(const std_msgs::String::ConstPtr& msg)
+{
+        if (msg->data == "q") {
+                throw -1;
+        }
+}
+
 /*************** MAIN PROGRAM *************/
 
 int main(int argc, char **argv) {
@@ -132,7 +184,8 @@ int main(int argc, char **argv) {
     ros::Subscriber state_sub = nh.subscribe("/mavros/state", 1, &Receiver::stateCallback, &receiver);
     ros::Subscriber vfr_sub = nh.subscribe("/mavros/vfr_hud", 1, &Receiver::vfrCallback, &receiver);
     ros::Subscriber rc_sub = nh.subscribe("/mavros/rc/in", 1, &Receiver::rcCallback, &receiver);
-	 ros::Subscriber key_sub = nh.subscribe("/cmd_vel", 1, &Receiver::keyCallback, &receiver);
+	// ros::Subscriber key_sub = nh.subscribe("/cmd_vel", 1, &Receiver::keyCallback, &receiver);
+	ros::Subscriber key_sub = nh.subscribe("/key",1,key_cb);
     receiver.state_finished = true;
     receiver.vfr_finished = true;
     receiver.rc_finished = true;
@@ -140,7 +193,8 @@ int main(int argc, char **argv) {
 
     ros::Publisher rc_message = nh.advertise<mavros_msgs::OverrideRCIn>("/mavros/rc/override", 1, true);
     mavros_msgs::OverrideRCIn rc_command;
-    
+ 	
+	try {   
     //ARMING
     ROS_INFO("Commencing: Preliminary Setup");
     
@@ -189,4 +243,11 @@ int main(int argc, char **argv) {
         //rc_message.publish(rc_command);
      }
     ROS_INFO("RELEASING");
+
+	} catch(int d) {
+		if (d==-1) { 
+			ROS_INFO("ABORTING MANUALLY");
+		}
+		set_rc(rc_message, offSpeed);
+	}
 }

@@ -9,6 +9,7 @@
 #include <mavros_msgs/VFR_HUD.h>
 #include <mavros_msgs/RCIn.h>
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/String.h>
 
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/CommandBool.h>
@@ -52,6 +53,13 @@ void rc_cb(const mavros_msgs::RCIn::ConstPtr& msg)
 	rc_available = true;
 }
 
+void key_cb(const std_msgs::String::ConstPtr& msg)
+{
+	if (msg->data == "q") {
+		throw -1;
+	}
+}
+
 void set_rc(ros::Publisher rc_message, int speed[]) {
 	if (!rc_available) {
 		ROS_ERROR("Cannot set speed yet");		
@@ -82,13 +90,17 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "ExpNode");
 	ros::NodeHandle nh;
 	
+	
+	ros::Publisher rc_message = nh.advertise<mavros_msgs::OverrideRCIn>("/mavros/rc/override", 1, true);
 	ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>("mavros/state", 10, state_cb);
 	ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>("mavros/cmd/arming");
 	ros::ServiceClient mode_client = nh.serviceClient<mavros_msgs::SetMode>("mavros/set_mode");
 	ros::Subscriber rc_sub = nh.subscribe("/mavros/rc/in", 1, rc_cb);	
-
+	ros::Subscriber key_sub = nh.subscribe("/key",1,key_cb);
 	
 	ros::Rate rate(20.0);
+
+	try {
 
 	//wait til start
 	while(ros::ok() && !current_state.connected) {
@@ -98,7 +110,6 @@ int main(int argc, char **argv)
 	
 	ros::Duration flyDuration(2.);
 	
-	ros::Publisher rc_message = nh.advertise<mavros_msgs::OverrideRCIn>("/mavros/rc/override", 1, true);
 	mavros_msgs::OverrideRCIn rc_command;
 
 	//arming
@@ -139,4 +150,11 @@ int main(int argc, char **argv)
 	set_rc(rc_message,offSpeed); 	 
    
 	ROS_INFO("EXITING");   
+	
+	} catch (int d) {
+		if (d==-1) {
+			ROS_INFO("ABORTED MANUALLY");
+		}
+		set_rc(rc_message, offSpeed);
+	}
 }

@@ -1010,6 +1010,32 @@ tf2_msgs_generate_messages_cpp/fast:
 	$(MAKE) -f uavs-test/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make uavs-test/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
 .PHONY : tf2_msgs_generate_messages_cpp/fast
 
+#=============================================================================
+# Target rules for targets named _catkin_empty_exported_target
+
+# Build rule for target.
+_catkin_empty_exported_target: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _catkin_empty_exported_target
+.PHONY : _catkin_empty_exported_target
+
+# fast build rule for target.
+_catkin_empty_exported_target/fast:
+	$(MAKE) -f utilities/CMakeFiles/_catkin_empty_exported_target.dir/build.make utilities/CMakeFiles/_catkin_empty_exported_target.dir/build
+.PHONY : _catkin_empty_exported_target/fast
+
+#=============================================================================
+# Target rules for targets named key_in
+
+# Build rule for target.
+key_in: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 key_in
+.PHONY : key_in
+
+# fast build rule for target.
+key_in/fast:
+	$(MAKE) -f utilities/CMakeFiles/key_in.dir/build.make utilities/CMakeFiles/key_in.dir/build
+.PHONY : key_in/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1088,6 +1114,8 @@ help:
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_cpp"
+	@echo "... _catkin_empty_exported_target"
+	@echo "... key_in"
 .PHONY : help
 
 

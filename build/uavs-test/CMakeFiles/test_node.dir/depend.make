@@ -63,6 +63,7 @@ uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/ros/
 uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/ros/wall_timer_options.h
 uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
 uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/std_msgs/Header.h
+uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/std_msgs/String.h
 uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
 uavs-test/CMakeFiles/test_node.dir/src/main.cpp.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h
 

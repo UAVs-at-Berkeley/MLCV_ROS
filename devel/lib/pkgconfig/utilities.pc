@@ -1,0 +1,8 @@
+prefix=/home/mlcv/catkin_ws/devel
+
+Name: utilities
+Description: Description of utilities
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/mlcv/catkin_ws/devel/lib 
+Requires: 

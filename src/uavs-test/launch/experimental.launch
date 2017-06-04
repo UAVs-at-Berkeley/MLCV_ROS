@@ -1,3 +1,4 @@
 <launch>
-    <node pkg="uavs-test" name="exp_node" type="exp"/>
+    <node pkg="utilities" name="key_in" type="key_in"/>
+    <!--<node pkg="uavs-test" name="exp_node" type="exp"/>-->
 </launch>
